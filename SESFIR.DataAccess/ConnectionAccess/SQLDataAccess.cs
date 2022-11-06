@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SESFIR.DataAccess.ConnectionAccess
 {
-    public class SQLDataAccess : ISQLDataAccess
+    public sealed class SQLDataAccess : ISQLDataAccess
     {
         public string Connection { get; private set; }
         public SQLDataAccess(string connection)

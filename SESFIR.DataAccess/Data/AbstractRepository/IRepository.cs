@@ -9,8 +9,8 @@ namespace SESFIR.DataAccess.Data.AbstractRepository
 {
     public interface IRepository<T> where T : class
     {
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<IEnumerable<T>> GetEntitiesWhereAsync(Func<T, bool> expression);
+        Task<List<T>> GetAllAsync();
+        Task<List<T>> GetEntitiesWhereAsync(Func<T, bool> expression);
         Task<T> InsertAsync(T value);
         Task<T> UpdateAsync(T value);
         Task<T> SearchByIdAsync(int id);

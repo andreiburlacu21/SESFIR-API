@@ -12,10 +12,15 @@ namespace SESFIR.DataAccess.Data.AbstractRepository
         #region Fields
         protected ISQLDataAccess sqlDataAccess;
         #endregion
+
+        #region constructors
         public Repository(ISQLDataAccess sqlDataAccess)
         {
             this.sqlDataAccess = sqlDataAccess ?? throw new NullReferenceException();
         }
+
+        #endregion
+
         #region Methods
         public async Task<bool> DeleteAsync(T value)
         {
@@ -24,11 +29,13 @@ namespace SESFIR.DataAccess.Data.AbstractRepository
             return await connection.DeleteAsync(value);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<List<T>> GetAllAsync()
         {
             using var connection = new SqlConnection(sqlDataAccess.Connection);
 
-            return await connection.GetAllAsync<T>() ?? Enumerable.Empty<T>();
+            var entities = await connection.GetAllAsync<T>() ?? Enumerable.Empty<T>();
+
+            return entities.ToList();
         }
 
         public async Task<T> InsertAsync(T value)
@@ -57,13 +64,13 @@ namespace SESFIR.DataAccess.Data.AbstractRepository
             return null;
         }
 
-        public async Task<IEnumerable<T>> GetEntitiesWhereAsync(Func<T, bool> expression)
+        public async Task<List<T>> GetEntitiesWhereAsync(Func<T, bool> expression)
         {
             using var connection = new SqlConnection(sqlDataAccess.Connection);
 
             var entities = await connection.GetAllAsync<T>() ?? Enumerable.Empty<T>();
 
-            return entities.Where(expression);
+            return entities.Where(expression).ToList();
         }
 
         public async Task<T> FirstOrDefaultAsync(Func<T, bool> expression)
