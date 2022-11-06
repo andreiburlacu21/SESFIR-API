@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SESFIR.DataAccess.ConnectionAccess;
+using SESFIR.DataAccess.Factory;
 
 namespace SESFIR.Configuration
 {
@@ -9,6 +10,9 @@ namespace SESFIR.Configuration
         public static IServiceCollection AddRepositoryConfiguration(this IServiceCollection services, IConfiguration config)
         {
             services.AddSingleton<ISQLDataAccess>(new SQLDataAccess(config.GetConnectionString("DataBase")));
+
+            services.AddSingleton<ISQLDataFactory, SQLDataFactory>();
+
             return services;
         }
     }

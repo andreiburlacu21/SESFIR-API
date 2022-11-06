@@ -6,6 +6,7 @@ namespace SESFIR.DataAccess.Data.Domains
     {
         public int LocationId { get; set; }
         public string? LocationName { get; set; }
+        public string? ImageLocation { get; set; }
         public double PricePerHour { get; set; }
         public double LocationX { get; set; }
         public double LocationY { get; set; }
