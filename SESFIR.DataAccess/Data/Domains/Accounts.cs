@@ -1,4 +1,5 @@
 ﻿using Dapper.Contrib.Extensions;
+using SESFIR.Utils.Enums;
 
 namespace SESFIR.DataAccess.Data.Domains
 {
@@ -10,7 +11,7 @@ namespace SESFIR.DataAccess.Data.Domains
         public string? Password { get; set; }
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
-        public int Role { get; set; }
+        public Role Role { get; set; }
 
     }
 }
