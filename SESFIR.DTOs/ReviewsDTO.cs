@@ -1,9 +1,12 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SESFIR.DataAccess.Data.Domains
+namespace SESFIR.DTOs
 {
-    [Table("table_Reviews")]
-    public sealed class Reviews
+    public sealed class ReviewsDTO
     {
         public int ReviewId { get; set; }
         public int AccountId { get; set; }

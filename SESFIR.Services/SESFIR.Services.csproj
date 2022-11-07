@@ -6,4 +6,20 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Authentication.Service\Contracts\" />
+    <Folder Include="Email.Service\Contracts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SESFIR.DataAccess\SESFIR.DataAccess.csproj" />
+    <ProjectReference Include="..\SESFIR.DTOs\SESFIR.DTOs.csproj" />
+    <ProjectReference Include="..\SESFIR.Validators\SESFIR.Validators.csproj" />
+  </ItemGroup>
+
 </Project>
