@@ -5,6 +5,7 @@ namespace SESFIR.DataAccess.Data.Domains
     [Table("table_Reviews")]
     public sealed class Reviews
     {
+        [ExplicitKey]
         public int ReviewId { get; set; }
         public int AccountId { get; set; }
         public int LocationId { get; set; }

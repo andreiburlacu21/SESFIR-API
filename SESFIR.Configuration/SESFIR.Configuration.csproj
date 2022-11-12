@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SESFIR.DataAccess\SESFIR.DataAccess.csproj" />
     <ProjectReference Include="..\SESFIR.Mappers\SESFIR.Mappers.csproj" />
+    <ProjectReference Include="..\SESFIR.Services\SESFIR.Services.csproj" />
     <ProjectReference Include="..\SESFIR.Validators\SESFIR.Validators.csproj" />
   </ItemGroup>
 

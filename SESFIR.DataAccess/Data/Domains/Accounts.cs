@@ -6,6 +6,7 @@ namespace SESFIR.DataAccess.Data.Domains
     [Table("table_Accounts")]
     public sealed class Accounts
     {
+        [ExplicitKey]
         public int AccountId { get; set; }
         public string? UserName { get; set; }
         public string? Password { get; set; }

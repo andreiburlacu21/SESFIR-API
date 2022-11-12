@@ -5,6 +5,7 @@ namespace SESFIR.DataAccess.Data.Domains
     [Table("table_Bookings")]
     public sealed class Bookings
     {
+        [ExplicitKey]
         public int BookingId { get; set; }
         public int AccountId { get; set; }
         public int LocationId { get; set; }

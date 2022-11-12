@@ -78,5 +78,19 @@ namespace SESFIR.Services.Model.Service
             return _mapper.Map<AccountsDTO>(account);
         }
         #endregion
+
+        public async Task<AccountsDTO> SearchByEmailAsync(string email)
+        {
+            var accountsDTO = await _repositories.AccountsRepository.FirstOrDefaultAsync(x => x.Email == email);
+
+            return _mapper.Map<AccountsDTO>(accountsDTO);
+        }
+
+        public async Task<AccountsDTO> SearchByUserNameAsync(string userName)
+        {
+            var accountsDTO = await _repositories.AccountsRepository.FirstOrDefaultAsync(x => x.UserName == userName);
+
+            return _mapper.Map<AccountsDTO>(accountsDTO);
+        }
     }
 }

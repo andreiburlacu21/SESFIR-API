@@ -4,6 +4,7 @@ namespace SESFIR.DataAccess.Data.Domains
     [Table("table_Locations")]
     public sealed class Locations
     {
+        [ExplicitKey]
         public int LocationId { get; set; }
         public string? LocationName { get; set; }
         public string? ImageLocation { get; set; }
