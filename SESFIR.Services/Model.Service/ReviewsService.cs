@@ -45,7 +45,7 @@ namespace SESFIR.Services.Model.Service
         public async Task<ReviewsDTO> InsertAsync(ReviewsDTO value)
         {
             if (await _repositories.ReviewsRepository.FirstOrDefaultAsync(x => x.AccountId == value.AccountId &&
-                                                                               x.Description == value.Description) is not null)
+                                                                               x.Description.ToLower() == value.Description.ToLower()) is not null)
                 throw new ValidationException("Review already exists");
 
             await Validate.FluentValidate(_validator, value);
