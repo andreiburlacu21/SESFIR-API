@@ -44,8 +44,8 @@ public class AuthenticationService : IAuthenticationService
 
         var claims = new List<Claim>
             {
-                new Claim("Identifier", user.AccountId + ""),
-                new Claim(ClaimTypes.Role, user.Role + ""),
+                new Claim("Identifier", user.AccountId.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
                 new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(7)).ToUnixTimeSeconds().ToString())
             };

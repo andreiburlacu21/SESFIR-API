@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SESFIR.DTOs;
 using SESFIR.Services.Model.Service.Contracts;
 
@@ -32,11 +33,13 @@ namespace SESFIR.Controllers
         }
 
         [HttpPost("insert")]
-        public async Task<IActionResult> Insert([FromBody] LocationsDTO user)
+        [Authorize(Roles = "Admin")]
+
+        public async Task<IActionResult> Insert([FromBody] LocationsDTO location)
         {
             try
             {
-                return Ok(await _locationService.InsertAsync(user));
+                return Ok(await _locationService.InsertAsync(location));
             }
             catch (Exception e)
             {
@@ -45,12 +48,14 @@ namespace SESFIR.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] LocationsDTO user)
+        [Authorize(Roles = "Admin")]
+
+        public async Task<IActionResult> Update([FromBody] LocationsDTO location)
         {
             try
             {
 
-                return Ok(await _locationService.UpdateAsync(user));
+                return Ok(await _locationService.UpdateAsync(location));
             }
             catch (Exception e)
             {
@@ -59,6 +64,8 @@ namespace SESFIR.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -79,16 +86,16 @@ namespace SESFIR.Controllers
         #endregion
 
         #region Private methods
-        //private async Task CheckRole(LocationsDTO user)
+        //private async Task CheckRole(LocationsDTO location)
         //{
-        //    var userId = int.Parse(User.FindFirst("Identifier")?.Value);
-        //    var userData = await _locationService.SearchByIdAsync(user.Id);
+        //    var locationId = int.Parse(User.FindFirst("Identifier")?.Value);
+        //    var locationData = await _locationService.SearchByIdAsync(location.Id);
         //    var role = User.FindFirst(ClaimTypes.Role)?.Value;
 
-        //    if (userId.Equals(user.Id) && !userData.IsAdmin.Equals(user.IsAdmin))
+        //    if (locationId.Equals(location.Id) && !locationData.IsAdmin.Equals(location.IsAdmin))
         //        throw new Exception("You can't edit your role, contact the owner for this task");
 
-        //    if (!(role == "Admin" || user.Id == userId))
+        //    if (!(role == "Admin" || location.Id == locationId))
         //        throw new Exception("You don't have access to modify, view or insert this value");
 
         //}

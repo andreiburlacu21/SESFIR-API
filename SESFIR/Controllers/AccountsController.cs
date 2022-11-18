@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SESFIR.DTOs;
 using SESFIR.Services.Model.Service.Contracts;
+using SESFIR.Utils.Enums;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,7 +11,7 @@ namespace SESFIR.Controllers
 {
     [Route("SESFIR/[controller]")]
     [ApiController]
-
+    [Authorize]
     public class AccountsController : ControllerBase
     {
         private readonly IServiceAccounts _userService;
@@ -20,6 +23,8 @@ namespace SESFIR.Controllers
         #region Crud Operation
 
         [HttpGet("all")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> GetAll()
         {
             try
@@ -33,6 +38,8 @@ namespace SESFIR.Controllers
         }
 
         [HttpPost("insert")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Insert([FromBody] AccountsDTO user)
         {
             try
@@ -46,10 +53,13 @@ namespace SESFIR.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize(Roles = "Admin,User")]
+
         public async Task<IActionResult> Update([FromBody] AccountsDTO user)
         {
             try
             {
+                await CheckRole(user);
 
                 return Ok(await _userService.UpdateAsync(user));
             }
@@ -60,6 +70,8 @@ namespace SESFIR.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -77,6 +89,8 @@ namespace SESFIR.Controllers
 
         #region Other Operation
         [HttpGet("username/{userName}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> SearchByUserName(string userName)
         {
             try
@@ -91,6 +105,8 @@ namespace SESFIR.Controllers
         }
 
         [HttpGet("myProfile")]
+        [Authorize(Roles = "Admin,User")]
+
         public async Task<IActionResult> GetMyData()
         {
             try
@@ -108,6 +124,8 @@ namespace SESFIR.Controllers
 
 
         [HttpGet("email/{email}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> SearchByEmail(string email)
         {
             try
@@ -123,19 +141,19 @@ namespace SESFIR.Controllers
         #endregion
 
         #region Private methods
-        //private async Task CheckRole(AccountsDTO user)
-        //{
-        //    var userId = int.Parse(User.FindFirst("Identifier")?.Value);
-        //    var userData = await _userService.SearchByIdAsync(user.Id);
-        //    var role = User.FindFirst(ClaimTypes.Role)?.Value;
+        private async Task CheckRole(AccountsDTO user)
+        {
+            var userId = int.Parse(User.FindFirst("Identifier")?.Value);
+            var userData = await _userService.SearchByIdAsync(user.AccountId);
+            var role = User.FindFirst(ClaimTypes.Role)?.Value;
 
-        //    if (userId.Equals(user.Id) && !userData.IsAdmin.Equals(user.IsAdmin))
-        //        throw new Exception("You can't edit your role, contact the owner for this task");
+            if (userId.Equals(user.AccountId) && userData.Role != user.Role)
+                throw new Exception("You can't edit your role, contact the owner for this task");
 
-        //    if (!(role == "Admin" || user.Id == userId))
-        //        throw new Exception("You don't have access to modify, view or insert this value");
+            if (user.AccountId != userId && role != Role.Admin.ToString())
+                throw new Exception("You don't have access to modify, view or insert this value");
 
-        //}
+        }
         #endregion
     }
 }

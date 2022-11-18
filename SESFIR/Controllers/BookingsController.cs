@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SESFIR.DTOs;
 using SESFIR.Services.Model.Service.Contracts;
+using SESFIR.Utils.Enums;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +11,8 @@ namespace SESFIR.Controllers
 {
     [Route("SESFIR/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class BookingsController : ControllerBase
     {
         private readonly IServiceBookings _bookingService;
@@ -32,11 +37,11 @@ namespace SESFIR.Controllers
         }
 
         [HttpPost("insert")]
-        public async Task<IActionResult> Insert([FromBody] BookingsDTO user)
+        public async Task<IActionResult> Insert([FromBody] BookingsDTO booking)
         {
             try
             {
-                return Ok(await _bookingService.InsertAsync(user));
+                return Ok(await _bookingService.InsertAsync(booking));
             }
             catch (Exception e)
             {
@@ -45,12 +50,13 @@ namespace SESFIR.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] BookingsDTO user)
+        public async Task<IActionResult> Update([FromBody] BookingsDTO booking)
         {
             try
             {
+                await Check(booking.BookingId);
 
-                return Ok(await _bookingService.UpdateAsync(user));
+                return Ok(await _bookingService.UpdateAsync(booking));
             }
             catch (Exception e)
             {
@@ -63,6 +69,7 @@ namespace SESFIR.Controllers
         {
             try
             {
+                await Check(id);
 
                 return Ok(await _bookingService.DeleteAsync(new BookingsDTO { BookingId = id }));
             }
@@ -79,19 +86,20 @@ namespace SESFIR.Controllers
         #endregion
 
         #region Private methods
-        //private async Task CheckRole(BookingsDTO user)
-        //{
-        //    var userId = int.Parse(User.FindFirst("Identifier")?.Value);
-        //    var userData = await _bookingService.SearchByIdAsync(user.Id);
-        //    var role = User.FindFirst(ClaimTypes.Role)?.Value;
 
-        //    if (userId.Equals(user.Id) && !userData.IsAdmin.Equals(user.IsAdmin))
-        //        throw new Exception("You can't edit your role, contact the owner for this task");
+        private async Task Check(int id)
+        {
+            var userId = int.Parse(User.FindFirst("Identifier")?.Value);
 
-        //    if (!(role == "Admin" || user.Id == userId))
-        //        throw new Exception("You don't have access to modify, view or insert this value");
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
 
-        //}
+            var bookingData = await _bookingService.SearchByIdAsync(id);
+
+            if (bookingData.AccountId != userId || userRole != Role.Admin.ToString())
+            {
+                throw new Exception("You dont have access to modify thie value");
+            }
+        }
         #endregion
     }
 }

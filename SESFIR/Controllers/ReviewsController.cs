@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SESFIR.DTOs;
+using SESFIR.Services.Model.Service;
 using SESFIR.Services.Model.Service.Contracts;
+using SESFIR.Utils.Enums;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -32,11 +36,12 @@ namespace SESFIR.Controllers
         }
 
         [HttpPost("insert")]
-        public async Task<IActionResult> Insert([FromBody] ReviewsDTO user)
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> Insert([FromBody] ReviewsDTO review)
         {
             try
             {
-                return Ok(await _reviewService.InsertAsync(user));
+                return Ok(await _reviewService.InsertAsync(review));
             }
             catch (Exception e)
             {
@@ -45,12 +50,15 @@ namespace SESFIR.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] ReviewsDTO user)
+        [Authorize(Roles = "Admin,User")]
+
+        public async Task<IActionResult> Update([FromBody] ReviewsDTO review)
         {
             try
             {
+                await Check(review.ReviewId);
 
-                return Ok(await _reviewService.UpdateAsync(user));
+                return Ok(await _reviewService.UpdateAsync(review));
             }
             catch (Exception e)
             {
@@ -59,10 +67,13 @@ namespace SESFIR.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,User")]
+
         public async Task<IActionResult> Delete(int id)
         {
             try
             {
+                await Check(id);
 
                 return Ok(await _reviewService.DeleteAsync(new ReviewsDTO { ReviewId = id }));
             }
@@ -79,19 +90,17 @@ namespace SESFIR.Controllers
         #endregion
 
         #region Private methods
-        //private async Task CheckRole(ReviewsDTO user)
-        //{
-        //    var userId = int.Parse(User.FindFirst("Identifier")?.Value);
-        //    var userData = await _reviewService.SearchByIdAsync(user.Id);
-        //    var role = User.FindFirst(ClaimTypes.Role)?.Value;
+        private async Task Check(int id)
+        {
+            var reviewId = int.Parse(User.FindFirst("Identifier")?.Value);
 
-        //    if (userId.Equals(user.Id) && !userData.IsAdmin.Equals(user.IsAdmin))
-        //        throw new Exception("You can't edit your role, contact the owner for this task");
+            var reviewData = await _reviewService.SearchByIdAsync(id);
 
-        //    if (!(role == "Admin" || user.Id == userId))
-        //        throw new Exception("You don't have access to modify, view or insert this value");
-
-        //}
+            if (reviewData.AccountId != reviewId)
+            {
+                throw new Exception("You dont have access to modify thie value");
+            }
+        }
         #endregion
     }
 
