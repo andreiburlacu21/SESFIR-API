@@ -12,7 +12,7 @@ namespace SESFIR.DataAccess.Data.AbstractRepository
         Task<List<T>> GetAllAsync();
         Task<List<T>> GetEntitiesWhereAsync(Func<T, bool> expression);
         Task<T> InsertAsync(T value);
-        Task<T> UpdateAsync(T value);
+        Task<T?> UpdateAsync(T value);
         Task<T> SearchByIdAsync(int id);
         Task<T> FirstOrDefaultAsync(Func<T, bool> expression);
         Task<bool> DeleteAsync(T value);

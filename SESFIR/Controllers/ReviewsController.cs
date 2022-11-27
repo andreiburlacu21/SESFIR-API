@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SESFIR.DTOs;
 using SESFIR.Services.Model.Service;
@@ -98,7 +99,7 @@ namespace SESFIR.Controllers
 
             if (reviewData.AccountId != reviewId)
             {
-                throw new Exception("You dont have access to modify thie value");
+                throw new ValidationException("You dont have access to modify thie value");
             }
         }
         #endregion

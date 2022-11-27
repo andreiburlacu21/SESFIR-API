@@ -54,7 +54,7 @@ namespace SESFIR.DataAccess.Data.AbstractRepository
             return await connection.GetAsync<T>(id);
         }
 
-        public async Task<T> UpdateAsync(T value)
+        public async Task<T?> UpdateAsync(T value)
         {
             using var connection = new MySqlConnection(sqlDataAccess.Connection);
 

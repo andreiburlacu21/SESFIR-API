@@ -9,7 +9,8 @@ namespace SESFIR.Configuration
     {
         public static IServiceCollection AddRepositoryConfiguration(this IServiceCollection services, IConfiguration config)
         {
-            services.AddSingleton<ISQLDataAccess>(new SQLDataAccess(config.GetConnectionString("DataBase")));
+
+            services.AddSingleton<ISQLDataAccess>(new SQLDataAccess(config.GetConnectionString("DataBase") ?? throw new ArgumentNullException("config")));
 
             services.AddSingleton<ISQLDataFactory, SQLDataFactory>();
 

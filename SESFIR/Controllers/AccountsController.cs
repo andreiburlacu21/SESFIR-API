@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SESFIR.DTOs;
 using SESFIR.Services.Model.Service.Contracts;
@@ -148,10 +149,10 @@ namespace SESFIR.Controllers
             var role = User.FindFirst(ClaimTypes.Role)?.Value;
 
             if (userId.Equals(user.AccountId) && userData.Role != user.Role)
-                throw new Exception("You can't edit your role, contact the owner for this task");
+                throw new ValidationException("You can't edit your role, contact the owner for this task");
 
             if (user.AccountId != userId && role != Role.Admin.ToString())
-                throw new Exception("You don't have access to modify, view or insert this value");
+                throw new ValidationException("You don't have access to modify, view or insert this value");
 
         }
         #endregion

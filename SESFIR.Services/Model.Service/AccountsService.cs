@@ -44,12 +44,16 @@ namespace SESFIR.Services.Model.Service
 
         public async Task<AccountsDTO> InsertAsync(AccountsDTO value)
         {
-            if (await _repositories.AccountsRepository.FirstOrDefaultAsync(x => x.UserName == value.UserName) is not null)
+            var acc = await _repositories.AccountsRepository.FirstOrDefaultAsync(x => x.UserName.Equals(value.UserName));
+
+            if (acc is not null)
                 throw new ValidationException("Account already exists");
 
             await Validate.FluentValidate(_validator, value);
 
-            var accountDTO = await _repositories.AccountsRepository.InsertAsync(_mapper.Map<Accounts>(value));
+            var account = _mapper.Map<Accounts>(value);
+
+            var accountDTO = await _repositories.AccountsRepository.InsertAsync(account);
 
             return _mapper.Map<AccountsDTO>(accountDTO);
         }

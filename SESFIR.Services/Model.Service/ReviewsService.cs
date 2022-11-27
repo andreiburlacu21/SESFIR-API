@@ -44,11 +44,11 @@ namespace SESFIR.Services.Model.Service
 
         public async Task<ReviewsDTO> InsertAsync(ReviewsDTO value)
         {
+            await Validate.FluentValidate(_validator, value);
+
             if (await _repositories.ReviewsRepository.FirstOrDefaultAsync(x => x.AccountId == value.AccountId &&
                                                                                x.Description.ToLower() == value.Description.ToLower()) is not null)
                 throw new ValidationException("Review already exists");
-
-            await Validate.FluentValidate(_validator, value);
 
             var userDTO = await _repositories.ReviewsRepository.InsertAsync(_mapper.Map<Reviews>(value));
 

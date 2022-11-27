@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SESFIR.Configuration", "SES
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SESFIR.Validators", "SESFIR.Validators\SESFIR.Validators.csproj", "{03301CB7-BD3B-4B08-9788-5C81AA5250F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SESFIR.Utils", "SESFIR.Utils\SESFIR.Utils.csproj", "{2E91AD2F-7319-4462-A2A3-FCB41A1B8C7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SESFIR.Utils", "SESFIR.Utils\SESFIR.Utils.csproj", "{2E91AD2F-7319-4462-A2A3-FCB41A1B8C7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SESIFIR.Services.Tests", "SESIFIR.Services.Tests\SESIFIR.Services.Tests.csproj", "{4DD9BAC5-D56F-4CB6-99B4-D1A6B40DA166}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{2E91AD2F-7319-4462-A2A3-FCB41A1B8C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E91AD2F-7319-4462-A2A3-FCB41A1B8C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E91AD2F-7319-4462-A2A3-FCB41A1B8C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DD9BAC5-D56F-4CB6-99B4-D1A6B40DA166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DD9BAC5-D56F-4CB6-99B4-D1A6B40DA166}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DD9BAC5-D56F-4CB6-99B4-D1A6B40DA166}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DD9BAC5-D56F-4CB6-99B4-D1A6B40DA166}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
