@@ -1,3 +1,4 @@
+using Microsoft.Extensions.FileProviders;
 using SESFIR.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,15 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseStaticFiles
+    (
+        new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "Images")),
+            RequestPath = "/Images"
+        }
+    );
 
 app.MapControllers();
 
