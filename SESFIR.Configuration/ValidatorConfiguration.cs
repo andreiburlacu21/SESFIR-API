@@ -9,13 +9,13 @@ namespace SESFIR.Configuration
     {
         public static IServiceCollection AddValidatorConfiguration(this IServiceCollection services)
         {
-            services.AddTransient<IValidator<AccountsDTO>, AccountsValidation>();
+            services.AddTransient<IValidator<AccountDTO>, AccountsValidation>();
 
-            services.AddTransient<IValidator<BookingsDTO>, BookingsValidation>();
+            services.AddTransient<IValidator<BookingDTO>, BookingsValidation>();
 
-            services.AddTransient<IValidator<LocationsDTO>, LocationsValidation>();
+            services.AddTransient<IValidator<LocationDTO>, LocationsValidation>();
 
-            services.AddTransient<IValidator<ReviewsDTO>, ReviewsValidation>();
+            services.AddTransient<IValidator<ReviewDTO>, ReviewsValidation>();
 
             return services;
         }

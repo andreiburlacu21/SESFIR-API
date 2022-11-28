@@ -5,7 +5,7 @@ using SESFIR.DataAccess.Data.Interfaces;
 
 namespace SESFIR.DataAccess.Data
 {
-    public sealed class AccountsRepository : Repository<Accounts>, IAccountsRepository
+    public sealed class AccountsRepository : Repository<Account>, IAccountsRepository
     {
         public AccountsRepository(ISQLDataAccess sqlDataAccess) : base(sqlDataAccess)
         {

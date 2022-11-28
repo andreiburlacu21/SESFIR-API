@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SESFIR.Services.Model.Service.Contracts
 {
-    public interface IServiceReviews : IService<ReviewsDTO>
+    public interface IServiceReviews : IService<ReviewDTO>
     {
     }
 }

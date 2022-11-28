@@ -3,7 +3,7 @@ using SESFIR.DataAccess.Data.Domains;
 
 namespace SESFIR.DataAccess.Data.Interfaces
 {
-    public interface IBookingsRepository : IRepository<Bookings>
+    public interface IBookingsRepository : IRepository<Booking>
     {
     }
 }

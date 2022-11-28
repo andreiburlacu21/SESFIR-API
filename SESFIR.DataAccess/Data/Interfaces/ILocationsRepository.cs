@@ -3,7 +3,7 @@ using SESFIR.DataAccess.Data.Domains;
 
 namespace SESFIR.DataAccess.Data.Interfaces
 {
-    public interface ILocationsRepository : IRepository<Locations>
+    public interface ILocationsRepository : IRepository<Location>
     {
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SESFIR.DTOs
 {
-    public sealed class AccountsDTO
+    public sealed class AccountDTO
     {
         public int AccountId { get; set; }
         public string? UserName { get; set; }

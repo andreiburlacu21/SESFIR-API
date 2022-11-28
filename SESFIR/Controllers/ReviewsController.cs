@@ -38,7 +38,7 @@ namespace SESFIR.Controllers
 
         [HttpPost("insert")]
         [Authorize(Roles = "Admin,User")]
-        public async Task<IActionResult> Insert([FromBody] ReviewsDTO review)
+        public async Task<IActionResult> Insert([FromBody] ReviewDTO review)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace SESFIR.Controllers
         [HttpPut("update")]
         [Authorize(Roles = "Admin,User")]
 
-        public async Task<IActionResult> Update([FromBody] ReviewsDTO review)
+        public async Task<IActionResult> Update([FromBody] ReviewDTO review)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace SESFIR.Controllers
             {
                 await Check(id);
 
-                return Ok(await _reviewService.DeleteAsync(new ReviewsDTO { ReviewId = id }));
+                return Ok(await _reviewService.DeleteAsync(new ReviewDTO { ReviewId = id }));
             }
             catch (Exception e)
             {

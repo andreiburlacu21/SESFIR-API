@@ -4,7 +4,7 @@ using SESFIR.DataAccess.Data.Domains;
 
 namespace SESFIR.DataAccess.Data.Interfaces
 {
-    public interface IReviewsRepository : IRepository<Reviews>
+    public interface IReviewsRepository : IRepository<Review>
     {
     }
 }

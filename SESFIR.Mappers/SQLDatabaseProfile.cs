@@ -13,10 +13,10 @@ namespace SESFIR.Mappers
     {
         public SQLDatabaseProfile()
         {
-            CreateMap<AccountsDTO, Accounts>().ReverseMap();
-            CreateMap<BookingsDTO, Bookings>().ReverseMap();
-            CreateMap<ReviewsDTO, Reviews>().ReverseMap();
-            CreateMap<LocationsDTO, Locations>().ReverseMap();
+            CreateMap<AccountDTO, Account>().ReverseMap();
+            CreateMap<BookingDTO, Booking>().ReverseMap();
+            CreateMap<ReviewDTO, Review>().ReverseMap();
+            CreateMap<LocationDTO, Location>().ReverseMap();
         }
     }
 }

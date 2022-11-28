@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SESFIR.Services.Model.Service.Contracts
 {
-    public interface IServiceLocations : IService<LocationsDTO>
+    public interface IServiceLocations : IService<LocationDTO>
     {
     }
 }

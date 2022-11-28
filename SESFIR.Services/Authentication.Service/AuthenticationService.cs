@@ -82,7 +82,7 @@ public class AuthenticationService : IAuthenticationService
         return true;
     }
 
-    public async Task<AccountsDTO> RegisterAsync(AccountsDTO user)
+    public async Task<AccountDTO> RegisterAsync(AccountDTO user)
     {
         if (await CheckEmailAsync(user.Email))
             throw new ValidationException("Invalid email");
@@ -96,9 +96,9 @@ public class AuthenticationService : IAuthenticationService
 
         await Validate.FluentValidate(validator, user);
 
-        var result = _mapper.Map<Accounts>(user);
+        var result = _mapper.Map<Account>(user);
 
-        return _mapper.Map<AccountsDTO>(await _repositories.AccountsRepository.InsertAsync(result));
+        return _mapper.Map<AccountDTO>(await _repositories.AccountsRepository.InsertAsync(result));
 
     }
 }

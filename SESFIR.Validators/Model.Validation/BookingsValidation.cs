@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SESFIR.Validators.Model.Validation
 {
-    public sealed class BookingsValidation : AbstractValidator<BookingsDTO>
+    public sealed class BookingsValidation : AbstractValidator<BookingDTO>
     {
         public BookingsValidation()
         {

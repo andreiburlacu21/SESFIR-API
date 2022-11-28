@@ -38,7 +38,7 @@ namespace SESFIR.Controllers
         }
 
         [HttpPost("insert")]
-        public async Task<IActionResult> Insert([FromBody] BookingsDTO booking)
+        public async Task<IActionResult> Insert([FromBody] BookingDTO booking)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace SESFIR.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] BookingsDTO booking)
+        public async Task<IActionResult> Update([FromBody] BookingDTO booking)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace SESFIR.Controllers
             {
                 await Check(id);
 
-                return Ok(await _bookingService.DeleteAsync(new BookingsDTO { BookingId = id }));
+                return Ok(await _bookingService.DeleteAsync(new BookingDTO { BookingId = id }));
             }
             catch (Exception e)
             {

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SESFIR.Services.Model.Service.Contracts
 {
-    public interface IServiceAccounts : IService<AccountsDTO>
+    public interface IServiceAccounts : IService<AccountDTO>
     {
-        Task<AccountsDTO> SearchByUserNameAsync(string userName);
-        Task<AccountsDTO> SearchByEmailAsync(string email);
+        Task<AccountDTO> SearchByUserNameAsync(string userName);
+        Task<AccountDTO> SearchByEmailAsync(string email);
     }
 }

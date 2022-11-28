@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SESFIR.Validators.Model.Validation
 {
-    public sealed class AccountsValidation : AbstractValidator<AccountsDTO>
+    public sealed class AccountsValidation : AbstractValidator<AccountDTO>
     {
         public AccountsValidation()
         {

@@ -4,7 +4,7 @@ using SESFIR.Utils.Enums;
 namespace SESFIR.DataAccess.Data.Domains
 {
     [Table("table_Accounts")]
-    public sealed class Accounts
+    public sealed class Account
     {
         [ExplicitKey]
         public int AccountId { get; set; }

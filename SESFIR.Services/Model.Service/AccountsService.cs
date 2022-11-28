@@ -12,12 +12,12 @@ namespace SESFIR.Services.Model.Service
     {
         #region Fields
         private readonly ISQLDataFactory _repositories;
-        private readonly IValidator<AccountsDTO> _validator;
+        private readonly IValidator<AccountDTO> _validator;
         private readonly IMapper _mapper;
         #endregion
 
         #region Constructor
-        public AccountsService(ISQLDataFactory repositories, IValidator<AccountsDTO> validator, IMapper mapper)
+        public AccountsService(ISQLDataFactory repositories, IValidator<AccountDTO> validator, IMapper mapper)
         {
             _repositories = repositories;
             _validator = validator;
@@ -26,23 +26,23 @@ namespace SESFIR.Services.Model.Service
         #endregion
 
         #region Crud Methods     
-        public async Task<bool> DeleteAsync(AccountsDTO value)
+        public async Task<bool> DeleteAsync(AccountDTO value)
         {
-            var accounts = _mapper.Map<Accounts>(value);
+            var accounts = _mapper.Map<Account>(value);
 
             return await _repositories.AccountsRepository.DeleteAsync(accounts);
         }
 
-        public async Task<List<AccountsDTO>> GetAllAsync()
+        public async Task<List<AccountDTO>> GetAllAsync()
         {
             var accounts = await _repositories.AccountsRepository.GetAllAsync();
 
             if (!accounts.Any()) throw new ValidationException("This table is empty");
 
-            return _mapper.Map<List<AccountsDTO>>(accounts);
+            return _mapper.Map<List<AccountDTO>>(accounts);
         }
 
-        public async Task<AccountsDTO> InsertAsync(AccountsDTO value)
+        public async Task<AccountDTO> InsertAsync(AccountDTO value)
         {
             var acc = await _repositories.AccountsRepository.FirstOrDefaultAsync(x => x.UserName.Equals(value.UserName));
 
@@ -51,21 +51,21 @@ namespace SESFIR.Services.Model.Service
 
             await Validate.FluentValidate(_validator, value);
 
-            var account = _mapper.Map<Accounts>(value);
+            var account = _mapper.Map<Account>(value);
 
             var accountDTO = await _repositories.AccountsRepository.InsertAsync(account);
 
-            return _mapper.Map<AccountsDTO>(accountDTO);
+            return _mapper.Map<AccountDTO>(accountDTO);
         }
 
-        public async Task<AccountsDTO> SearchByIdAsync(int id)
+        public async Task<AccountDTO> SearchByIdAsync(int id)
         {
             var accountsDTO = await _repositories.AccountsRepository.SearchByIdAsync(id);
 
-            return _mapper.Map<AccountsDTO>(accountsDTO);
+            return _mapper.Map<AccountDTO>(accountsDTO);
         }
 
-        public async Task<AccountsDTO> UpdateAsync(AccountsDTO value)
+        public async Task<AccountDTO> UpdateAsync(AccountDTO value)
         {
             if (await _repositories.AccountsRepository.SearchByIdAsync(value.AccountId) is null)
                 throw new ValidationException("Account does not exists");
@@ -77,24 +77,24 @@ namespace SESFIR.Services.Model.Service
 
             await Validate.FluentValidate(_validator, value);
 
-            var account = await _repositories.AccountsRepository.UpdateAsync(_mapper.Map<Accounts>(value));
+            var account = await _repositories.AccountsRepository.UpdateAsync(_mapper.Map<Account>(value));
 
-            return _mapper.Map<AccountsDTO>(account);
+            return _mapper.Map<AccountDTO>(account);
         }
         #endregion
 
-        public async Task<AccountsDTO> SearchByEmailAsync(string email)
+        public async Task<AccountDTO> SearchByEmailAsync(string email)
         {
             var accountsDTO = await _repositories.AccountsRepository.FirstOrDefaultAsync(x => x.Email == email);
 
-            return _mapper.Map<AccountsDTO>(accountsDTO);
+            return _mapper.Map<AccountDTO>(accountsDTO);
         }
 
-        public async Task<AccountsDTO> SearchByUserNameAsync(string userName)
+        public async Task<AccountDTO> SearchByUserNameAsync(string userName)
         {
             var accountsDTO = await _repositories.AccountsRepository.FirstOrDefaultAsync(x => x.UserName == userName);
 
-            return _mapper.Map<AccountsDTO>(accountsDTO);
+            return _mapper.Map<AccountDTO>(accountsDTO);
         }
     }
 }

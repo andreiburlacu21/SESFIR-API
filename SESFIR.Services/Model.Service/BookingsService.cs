@@ -12,12 +12,12 @@ namespace SESFIR.Services.Model.Service
     {
         #region Fields
         private readonly ISQLDataFactory _repositories;
-        private readonly IValidator<BookingsDTO> _validator;
+        private readonly IValidator<BookingDTO> _validator;
         private readonly IMapper _mapper;
         #endregion
 
         #region Constructor
-        public BookingsService(ISQLDataFactory repositories, IValidator<BookingsDTO> validator, IMapper mapper)
+        public BookingsService(ISQLDataFactory repositories, IValidator<BookingDTO> validator, IMapper mapper)
         {
             _repositories = repositories;
             _validator = validator;
@@ -26,23 +26,23 @@ namespace SESFIR.Services.Model.Service
         #endregion
 
         #region Crud Methods     
-        public async Task<bool> DeleteAsync(BookingsDTO value)
+        public async Task<bool> DeleteAsync(BookingDTO value)
         {
-            var Bookings = _mapper.Map<Bookings>(value);
+            var Bookings = _mapper.Map<Booking>(value);
 
             return await _repositories.BookingsRepository.DeleteAsync(Bookings);
         }
 
-        public async Task<List<BookingsDTO>> GetAllAsync()
+        public async Task<List<BookingDTO>> GetAllAsync()
         {
             var Bookings = await _repositories.BookingsRepository.GetAllAsync();
 
             if (!Bookings.Any()) throw new ValidationException("This table is empty");
 
-            return _mapper.Map<List<BookingsDTO>>(Bookings);
+            return _mapper.Map<List<BookingDTO>>(Bookings);
         }
 
-        public async Task<BookingsDTO> InsertAsync(BookingsDTO value)
+        public async Task<BookingDTO> InsertAsync(BookingDTO value)
         {
             if (await _repositories.BookingsRepository.FirstOrDefaultAsync(x => x.LocationId == value.LocationId && 
                                                                                 x.InDate == value.InDate) is not null)
@@ -50,28 +50,28 @@ namespace SESFIR.Services.Model.Service
 
             await Validate.FluentValidate(_validator, value);
 
-            var userDTO = await _repositories.BookingsRepository.InsertAsync(_mapper.Map<Bookings>(value));
+            var userDTO = await _repositories.BookingsRepository.InsertAsync(_mapper.Map<Booking>(value));
 
-            return _mapper.Map<BookingsDTO>(userDTO);
+            return _mapper.Map<BookingDTO>(userDTO);
         }
 
-        public async Task<BookingsDTO> SearchByIdAsync(int id)
+        public async Task<BookingDTO> SearchByIdAsync(int id)
         {
             var booking = await _repositories.BookingsRepository.SearchByIdAsync(id);
 
-            return _mapper.Map<BookingsDTO>(booking);
+            return _mapper.Map<BookingDTO>(booking);
         }
 
-        public async Task<BookingsDTO> UpdateAsync(BookingsDTO value)
+        public async Task<BookingDTO> UpdateAsync(BookingDTO value)
         {
             if (await _repositories.BookingsRepository.SearchByIdAsync(value.BookingId) is null)
                 throw new ValidationException("Booking does not exists");    
 
             await Validate.FluentValidate(_validator, value);
 
-            var booking = await _repositories.BookingsRepository.UpdateAsync(_mapper.Map<Bookings>(value));
+            var booking = await _repositories.BookingsRepository.UpdateAsync(_mapper.Map<Booking>(value));
 
-            return _mapper.Map<BookingsDTO>(booking);
+            return _mapper.Map<BookingDTO>(booking);
         }
         #endregion
     }

@@ -27,10 +27,52 @@ namespace SESIFIR.Services.Tests
         }
 
         [Test]
+        public async Task Should_SearchyById_and_Return_ExpectedValue()
+        {
+            // arrange
+            var accountDTO = new AccountDTO()
+            {
+                AccountId = 3,
+                UserName = "Test2",
+                Email = "wewe@yahoo.com",
+                Password = "m4rinic4#123D",
+                PhoneNumber = "1234567890",
+                Role = Role.User
+
+            };
+            this.accountsServiceMock.SetUpSearchByID(accountDTO.AccountId);
+
+            // act
+            var account = await accountsService.SearchByIdAsync(accountDTO.AccountId);
+
+            // assert
+            Assert.That(account, Is.Not.Null);
+            Assert.IsTrue(account.AccountId == accountDTO.AccountId);
+            Assert.IsTrue(account.UserName == accountDTO.UserName);
+            Assert.IsTrue(account.Email == accountDTO.Email);
+            Assert.IsTrue(account.Password == accountDTO.Password);
+            Assert.IsTrue(account.PhoneNumber == accountDTO.PhoneNumber);
+            Assert.IsTrue(account.Role == accountDTO.Role);
+        }
+
+        [Test]
+        public async Task Should_SearchyById_and_Return_NotFound()
+        {
+            // arrange
+            this.accountsServiceMock.SetUpSearchByID(33);
+
+            // act
+            var account = await accountsService.SearchByIdAsync(33);
+
+            // assert
+            Assert.That(account, Is.Null);
+        }
+
+        [Test]
         public async Task Should_Insert_and_Return_ExpectedValue() 
         {
             // arrange
-            var accountDTO = new AccountsDTO()
+            var accountDTO = new AccountDTO()
             {
                 AccountId = 0,
                 UserName = "Test1",
@@ -58,7 +100,7 @@ namespace SESIFIR.Services.Tests
         public async Task Should_Insert_and_Throw_ValdiationException()
         {
             // arrange
-            var accountDTO = new AccountsDTO()
+            var accountDTO = new AccountDTO()
             {
                 AccountId = 0,
                 UserName = "Test",
@@ -94,7 +136,7 @@ namespace SESIFIR.Services.Tests
         public async Task Should_Update_and_Return_ExpectedValue()
         {
             // arrange
-            var accountDTO = new AccountsDTO()
+            var accountDTO = new AccountDTO()
             {
                 AccountId = 0,
                 UserName = "Test",
@@ -123,6 +165,42 @@ namespace SESIFIR.Services.Tests
 
             //this test only changes the password
             Assert.AreNotSame(initialAccount.Password, updatedAccount.Password);
+        }
+
+        [Test]
+        public async Task Should_Update_and_Throw_ValdiationException()
+        {
+            // arrange
+            var accountDTO = new AccountDTO()
+            {
+                AccountId = 3,
+                UserName = "Test",
+                Password = "23123",
+                PhoneNumber = "1234567890",
+                Role = Role.User
+
+            };
+            this.accountsServiceMock.SetUpSearchByID(accountDTO.AccountId);
+            this.accountsServiceMock.SetUpGetAll();
+            this.accountsServiceMock.SetUpUpdate(accountDTO);
+            try
+            {
+                // act
+                await accountsService.UpdateAsync(accountDTO);
+
+                await accountsService.GetAllAsync();
+
+                Assert.Fail();
+            }
+            catch (ValidationException ex)
+            {
+                // assert
+
+                Assert.That(ex, Is.Not.Null);
+
+                Assert.That(ex.Message, Is.Not.Empty);
+            }
+
         }
     }
 }

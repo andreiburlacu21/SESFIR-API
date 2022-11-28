@@ -2,7 +2,7 @@
 namespace SESFIR.DataAccess.Data.Domains
 {
     [Table("table_Locations")]
-    public sealed class Locations
+    public sealed class Location
     {
         [ExplicitKey]
         public int LocationId { get; set; }

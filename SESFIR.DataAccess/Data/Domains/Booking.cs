@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Dapper.Contrib.Extensions;
 
-namespace SESFIR.DTOs
+namespace SESFIR.DataAccess.Data.Domains
 {
-    public sealed class BookingsDTO
+    [Table("table_Bookings")]
+    public sealed class Booking
     {
+        [ExplicitKey]
         public int BookingId { get; set; }
         public int AccountId { get; set; }
         public int LocationId { get; set; }

@@ -4,7 +4,7 @@ using SESFIR.DataAccess.Data.Domains;
 
 namespace SESFIR.DataAccess.Data.Interfaces
 {
-    public interface IAccountsRepository : IRepository<Accounts>
+    public interface IAccountsRepository : IRepository<Account>
     {
     }
 }

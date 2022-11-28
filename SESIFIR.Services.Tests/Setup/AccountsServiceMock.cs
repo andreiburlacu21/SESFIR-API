@@ -5,6 +5,7 @@ using SESFIR.DataAccess.Data.Domains;
 using SESFIR.DataAccess.Factory;
 using SESFIR.DTOs;
 using SESFIR.Mappers;
+using SESFIR.Utils.Enums;
 using SESFIR.Validators.Model.Validation;
 
 namespace SESIFIR.Services.Tests.Setup;
@@ -14,8 +15,8 @@ internal class AccountsServiceMock
     #region Fields
     private Mock<ISQLDataFactory> mockRepositories;
     private IMapper mockMapper;
-    private IValidator<AccountsDTO> mockValidator;
-    private List<Accounts> mockAccounts;
+    private IValidator<AccountDTO> mockValidator;
+    private List<Account> mockAccounts;
     #endregion
 
     #region Contructors
@@ -44,7 +45,7 @@ internal class AccountsServiceMock
             return mockMapper;
         } 
     }
-    public IValidator<AccountsDTO> Validator 
+    public IValidator<AccountDTO> Validator 
     {
         get
         {
@@ -54,12 +55,12 @@ internal class AccountsServiceMock
     #endregion
 
     #region Methods
-    public void SetUpInsert(AccountsDTO accountDTO)
+    public void SetUpInsert(AccountDTO accountDTO)
     {
-        mockRepositories.Setup(x => x.AccountsRepository.InsertAsync(It.IsAny<Accounts>()))
+        mockRepositories.Setup(x => x.AccountsRepository.InsertAsync(It.IsAny<Account>()))
             .ReturnsAsync(() =>
             {
-                var account = this.Mapper.Map<Accounts>(accountDTO);
+                var account = this.Mapper.Map<Account>(accountDTO);
 
                 var count = mockAccounts.Count + 1;
 
@@ -70,12 +71,12 @@ internal class AccountsServiceMock
                 return mockAccounts.FirstOrDefault(x => x.AccountId == account.AccountId);
             });
     }
-    public void SetUpUpdate(AccountsDTO accountDTO)
+    public void SetUpUpdate(AccountDTO accountDTO)
     {
-        mockRepositories.Setup(x => x.AccountsRepository.UpdateAsync(It.IsAny<Accounts>()))
+        mockRepositories.Setup(x => x.AccountsRepository.UpdateAsync(It.IsAny<Account>()))
             .ReturnsAsync(() =>
             {
-                var account = this.Mapper.Map<Accounts>(accountDTO);
+                var account = this.Mapper.Map<Account>(accountDTO);
 
                 mockAccounts.RemoveAll(x => x.AccountId == account.AccountId);
 
@@ -92,9 +93,9 @@ internal class AccountsServiceMock
                 return mockAccounts;
             });
     }
-    public void SetUpFirstOrDefault(Func<Accounts,bool> expresion)
+    public void SetUpFirstOrDefault(Func<Account,bool> expresion)
     {
-        mockRepositories.Setup(x => x.AccountsRepository.FirstOrDefaultAsync(It.IsAny<Func<Accounts, bool>>()))
+        mockRepositories.Setup(x => x.AccountsRepository.FirstOrDefaultAsync(It.IsAny<Func<Account, bool>>()))
            .ReturnsAsync(() =>
            {
                return mockAccounts.FirstOrDefault(expresion);
@@ -110,15 +111,15 @@ internal class AccountsServiceMock
     }
     private void SetUpMockAccounts()
     {
-        mockAccounts = new List<Accounts>()
+        mockAccounts = new List<Account>()
         {
-            new Accounts()
+            new Account()
             {
                 AccountId = 1,
                 PhoneNumber = "1234567890",
                 Email= "1234@yahoo.com"
             },
-            new Accounts()
+            new Account()
             {
                 AccountId = 0,
                 UserName = "Test",
@@ -126,6 +127,15 @@ internal class AccountsServiceMock
                 Password = "23123",
                 PhoneNumber= "1234567890",
                 Role = SESFIR.Utils.Enums.Role.User
+            }, 
+            new Account()
+            {
+                AccountId = 3,
+                UserName = "Test2",
+                Email = "wewe@yahoo.com",
+                Password = "m4rinic4#123D",
+                PhoneNumber = "1234567890",
+                Role = Role.User
             }
         };
     }

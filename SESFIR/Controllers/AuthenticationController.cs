@@ -39,7 +39,7 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] AccountsDTO user)
+    public async Task<IActionResult> Register([FromBody] AccountDTO user)
     {
         try
         {

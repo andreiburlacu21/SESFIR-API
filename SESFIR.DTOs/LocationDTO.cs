@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SESFIR.DTOs
 {
-    public sealed class LocationsDTO
+    public sealed class LocationDTO
     {
         public int LocationId { get; set; }
         public string? LocationName { get; set; }

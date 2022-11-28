@@ -41,7 +41,7 @@ namespace SESFIR.Controllers
         [HttpPost("insert")]
         [Authorize(Roles = "Admin")]
 
-        public async Task<IActionResult> Insert([FromBody] AccountsDTO user)
+        public async Task<IActionResult> Insert([FromBody] AccountDTO user)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace SESFIR.Controllers
         [HttpPut("update")]
         [Authorize(Roles = "Admin,User")]
 
-        public async Task<IActionResult> Update([FromBody] AccountsDTO user)
+        public async Task<IActionResult> Update([FromBody] AccountDTO user)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace SESFIR.Controllers
             try
             {
 
-                return Ok(await _userService.DeleteAsync(new AccountsDTO { AccountId = id }));
+                return Ok(await _userService.DeleteAsync(new AccountDTO { AccountId = id }));
             }
             catch (Exception e)
             {
@@ -142,7 +142,7 @@ namespace SESFIR.Controllers
         #endregion
 
         #region Private methods
-        private async Task CheckRole(AccountsDTO user)
+        private async Task CheckRole(AccountDTO user)
         {
             var userId = int.Parse(User.FindFirst("Identifier")?.Value);
             var userData = await _userService.SearchByIdAsync(user.AccountId);

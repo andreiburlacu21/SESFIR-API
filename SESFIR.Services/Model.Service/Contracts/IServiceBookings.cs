@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SESFIR.Services.Model.Service.Contracts
 {
-    public interface IServiceBookings : IService<BookingsDTO>
+    public interface IServiceBookings : IService<BookingDTO>
     {
     }
 }

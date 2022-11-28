@@ -35,7 +35,7 @@ namespace SESFIR.Controllers
         [HttpPost("insert")]
         [Authorize(Roles = "Admin")]
 
-        public async Task<IActionResult> Insert([FromBody] LocationsDTO location)
+        public async Task<IActionResult> Insert([FromBody] LocationDTO location)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace SESFIR.Controllers
         [HttpPut("update")]
         [Authorize(Roles = "Admin")]
 
-        public async Task<IActionResult> Update([FromBody] LocationsDTO location)
+        public async Task<IActionResult> Update([FromBody] LocationDTO location)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace SESFIR.Controllers
             try
             {
 
-                return Ok(await _locationService.DeleteAsync(new LocationsDTO { LocationId = id }));
+                return Ok(await _locationService.DeleteAsync(new LocationDTO { LocationId = id }));
             }
             catch (Exception e)
             {

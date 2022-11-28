@@ -12,12 +12,12 @@ namespace SESFIR.Services.Model.Service
     {
         #region Fields
         private readonly ISQLDataFactory _repositories;
-        private readonly IValidator<ReviewsDTO> _validator;
+        private readonly IValidator<ReviewDTO> _validator;
         private readonly IMapper _mapper;
         #endregion
 
         #region Constructor
-        public ReviewsService(ISQLDataFactory repositories, IValidator<ReviewsDTO> validator, IMapper mapper)
+        public ReviewsService(ISQLDataFactory repositories, IValidator<ReviewDTO> validator, IMapper mapper)
         {
             _repositories = repositories;
             _validator = validator;
@@ -26,23 +26,23 @@ namespace SESFIR.Services.Model.Service
         #endregion
 
         #region Crud Methods     
-        public async Task<bool> DeleteAsync(ReviewsDTO value)
+        public async Task<bool> DeleteAsync(ReviewDTO value)
         {
-            var Reviews = _mapper.Map<Reviews>(value);
+            var Reviews = _mapper.Map<Review>(value);
 
             return await _repositories.ReviewsRepository.DeleteAsync(Reviews);
         }
 
-        public async Task<List<ReviewsDTO>> GetAllAsync()
+        public async Task<List<ReviewDTO>> GetAllAsync()
         {
             var Reviews = await _repositories.ReviewsRepository.GetAllAsync();
 
             if (!Reviews.Any()) throw new ValidationException("This table is empty");
 
-            return _mapper.Map<List<ReviewsDTO>>(Reviews);
+            return _mapper.Map<List<ReviewDTO>>(Reviews);
         }
 
-        public async Task<ReviewsDTO> InsertAsync(ReviewsDTO value)
+        public async Task<ReviewDTO> InsertAsync(ReviewDTO value)
         {
             await Validate.FluentValidate(_validator, value);
 
@@ -50,28 +50,28 @@ namespace SESFIR.Services.Model.Service
                                                                                x.Description.ToLower() == value.Description.ToLower()) is not null)
                 throw new ValidationException("Review already exists");
 
-            var userDTO = await _repositories.ReviewsRepository.InsertAsync(_mapper.Map<Reviews>(value));
+            var userDTO = await _repositories.ReviewsRepository.InsertAsync(_mapper.Map<Review>(value));
 
-            return _mapper.Map<ReviewsDTO>(userDTO);
+            return _mapper.Map<ReviewDTO>(userDTO);
         }
 
-        public async Task<ReviewsDTO> SearchByIdAsync(int id)
+        public async Task<ReviewDTO> SearchByIdAsync(int id)
         {
             var Review = await _repositories.ReviewsRepository.SearchByIdAsync(id);
 
-            return _mapper.Map<ReviewsDTO>(Review);
+            return _mapper.Map<ReviewDTO>(Review);
         }
 
-        public async Task<ReviewsDTO> UpdateAsync(ReviewsDTO value)
+        public async Task<ReviewDTO> UpdateAsync(ReviewDTO value)
         {
             if (await _repositories.ReviewsRepository.SearchByIdAsync(value.ReviewId) is null)
                 throw new ValidationException("Review does not exists");
 
             await Validate.FluentValidate(_validator, value);
 
-            var Review = await _repositories.ReviewsRepository.UpdateAsync(_mapper.Map<Reviews>(value));
+            var Review = await _repositories.ReviewsRepository.UpdateAsync(_mapper.Map<Review>(value));
 
-            return _mapper.Map<ReviewsDTO>(Review);
+            return _mapper.Map<ReviewDTO>(Review);
         }
         #endregion
     }

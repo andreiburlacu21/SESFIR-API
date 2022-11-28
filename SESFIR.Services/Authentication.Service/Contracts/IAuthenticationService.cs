@@ -11,5 +11,5 @@ public interface IAuthenticationService
 {
     Task<dynamic> GenerateTokenAsync(AuthDTO authData);
     Task<bool> IsValidUserNameAndPassowrdAsync(AuthDTO authData);
-    Task<AccountsDTO> RegisterAsync(AccountsDTO user);
+    Task<AccountDTO> RegisterAsync(AccountDTO user);
 }

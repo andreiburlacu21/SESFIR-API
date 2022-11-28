@@ -3,7 +3,7 @@
 namespace SESFIR.DataAccess.Data.Domains
 {
     [Table("table_Reviews")]
-    public sealed class Reviews
+    public sealed class Review
     {
         [ExplicitKey]
         public int ReviewId { get; set; }
