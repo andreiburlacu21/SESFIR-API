@@ -37,7 +37,7 @@ namespace SESFIR.Services.Model.Service
         {
             var Reviews = await _repositories.ReviewsRepository.GetAllAsync();
 
-            if (!Reviews.Any()) throw new ValidationException("This table is empty");
+           // if (!Reviews.Any()) throw new ValidationException("This table is empty");
 
             return _mapper.Map<List<ReviewDTO>>(Reviews);
         }

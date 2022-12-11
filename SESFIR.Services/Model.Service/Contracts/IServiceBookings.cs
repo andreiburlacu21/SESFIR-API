@@ -9,5 +9,6 @@ namespace SESFIR.Services.Model.Service.Contracts
 {
     public interface IServiceBookings : IService<BookingDTO>
     {
+        Task<BookingWithEntitiesDTO> GetBookingEnitityAsync(int id);
     }
 }

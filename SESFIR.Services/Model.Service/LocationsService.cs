@@ -37,7 +37,7 @@ namespace SESFIR.Services.Model.Service
         {
             var Locations = await _repositories.LocationsRepository.GetAllAsync();
 
-            if (!Locations.Any()) throw new ValidationException("This table is empty");
+           // if (!Locations.Any()) throw new ValidationException("This table is empty");
 
             return _mapper.Map<List<LocationDTO>>(Locations);
         }

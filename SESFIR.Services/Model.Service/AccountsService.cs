@@ -37,7 +37,7 @@ namespace SESFIR.Services.Model.Service
         {
             var accounts = await _repositories.AccountsRepository.GetAllAsync();
 
-            if (!accounts.Any()) throw new ValidationException("This table is empty");
+           // if (!accounts.Any()) throw new ValidationException("This table is empty");
 
             return _mapper.Map<List<AccountDTO>>(accounts);
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SESFIR.DTOs
 {
-    public sealed class BookingDTO
+    public class BookingDTO
     {
         public int BookingId { get; set; }
         public int AccountId { get; set; }

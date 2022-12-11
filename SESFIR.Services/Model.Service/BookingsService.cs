@@ -37,7 +37,7 @@ namespace SESFIR.Services.Model.Service
         {
             var Bookings = await _repositories.BookingsRepository.GetAllAsync();
 
-            if (!Bookings.Any()) throw new ValidationException("This table is empty");
+           // if (!Bookings.Any()) throw new ValidationException("This table is empty");
 
             return _mapper.Map<List<BookingDTO>>(Bookings);
         }
@@ -74,5 +74,15 @@ namespace SESFIR.Services.Model.Service
             return _mapper.Map<BookingDTO>(booking);
         }
         #endregion
+
+
+        public async Task<BookingWithEntitiesDTO> GetBookingEnitityAsync(int id)
+        {
+            var booking = await _repositories.BookingsRepository.SearchByIdAsync(id);
+
+            return _mapper.Map<BookingWithEntitiesDTO>(booking);
+        }
+
     }
+
 }

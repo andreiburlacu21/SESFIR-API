@@ -8,6 +8,7 @@ namespace SESFIR.Configuration
         public static IServiceCollection AddMapperConfiguration(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(SQLDatabaseProfile));
+            //services.AddAutoMapper(typeof(CustomProfileWithEntities));
 
             return services;
         }

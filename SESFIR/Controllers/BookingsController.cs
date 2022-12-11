@@ -84,6 +84,21 @@ namespace SESFIR.Controllers
 
         #region Other Operation
 
+        [HttpGet("Entity/{id}")]
+        public async Task<IActionResult> GetBookingEntityById(int id)
+        {
+            try
+            {
+                await Check(id);
+
+                return Ok(await _bookingService.GetBookingEnitityAsync(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         #endregion
 
         #region Private methods
