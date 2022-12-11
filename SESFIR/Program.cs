@@ -10,10 +10,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddValidatorConfiguration();
-builder.Services.AddMapperConfiguration();
 builder.Services.AddServiceConfiguration(builder.Configuration);
 builder.Services.AddRepositoryConfiguration(builder.Configuration);
 builder.Services.AddJWTConfiguration(builder.Configuration);
+builder.Services.AddMapperConfiguration();
+
 
 var app = builder.Build();
 

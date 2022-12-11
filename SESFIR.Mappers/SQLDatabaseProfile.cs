@@ -15,6 +15,7 @@ namespace SESFIR.Mappers
         {
             CreateMap<AccountDTO, Account>().ReverseMap();
             CreateMap<BookingDTO, Booking>().ReverseMap();
+            CreateMap<BookingWithEntitiesDTO, Booking>().ReverseMap();
             CreateMap<ReviewDTO, Review>().ReverseMap();
             CreateMap<LocationDTO, Location>().ReverseMap();
         }

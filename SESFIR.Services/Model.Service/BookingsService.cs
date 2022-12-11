@@ -80,7 +80,17 @@ namespace SESFIR.Services.Model.Service
         {
             var booking = await _repositories.BookingsRepository.SearchByIdAsync(id);
 
-            return _mapper.Map<BookingWithEntitiesDTO>(booking);
+            var account = await _repositories.AccountsRepository.SearchByIdAsync(booking.AccountId);
+
+            var location = await _repositories.LocationsRepository.SearchByIdAsync(booking.LocationId);
+
+            var bookingWithEntitiesDTO = _mapper.Map<BookingWithEntitiesDTO>(booking);
+
+            bookingWithEntitiesDTO.Account = _mapper.Map<AccountDTO>(account);
+
+            bookingWithEntitiesDTO.Location = _mapper.Map<LocationDTO>(location);
+
+            return bookingWithEntitiesDTO;
         }
 
     }
