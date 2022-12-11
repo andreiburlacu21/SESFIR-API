@@ -9,5 +9,7 @@ namespace SESFIR.Services.Model.Service.Contracts
 {
     public interface IServiceReviews : IService<ReviewDTO>
     {
+        Task<ReviewWithEntitiesDTO> GetReviewEnitityAsync(int id);
+
     }
 }

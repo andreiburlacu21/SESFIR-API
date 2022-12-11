@@ -74,5 +74,22 @@ namespace SESFIR.Services.Model.Service
             return _mapper.Map<ReviewDTO>(Review);
         }
         #endregion
+
+        public async Task<ReviewWithEntitiesDTO> GetReviewEnitityAsync(int id)
+        {
+            var review = await _repositories.BookingsRepository.SearchByIdAsync(id);
+
+            var account = await _repositories.AccountsRepository.SearchByIdAsync(review.AccountId);
+
+            var location = await _repositories.LocationsRepository.SearchByIdAsync(review.LocationId);
+
+            var reviewWithEntitiesDTO = _mapper.Map<ReviewWithEntitiesDTO>(review);
+
+            reviewWithEntitiesDTO.Account = _mapper.Map<AccountDTO>(account);
+
+            reviewWithEntitiesDTO.Location = _mapper.Map<LocationDTO>(location);
+
+            return reviewWithEntitiesDTO;
+        }
     }
 }
