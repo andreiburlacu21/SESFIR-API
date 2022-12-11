@@ -111,6 +111,21 @@ namespace SESFIR.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("byLocationid/{id}")]
+        public async Task<IActionResult> GetByLocationId(int id)
+        {
+            try
+            {
+                return Ok(await _bookingService.GetBookingsByLocationIdAsync(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
         [HttpGet("dateval/{date}")]
         public async Task<IActionResult> CheckDate(string date)
         {

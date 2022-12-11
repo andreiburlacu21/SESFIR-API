@@ -7,6 +7,7 @@ namespace SESFIR.DataAccess.Data.Domains
         [ExplicitKey]
         public int LocationId { get; set; }
         public string? LocationName { get; set; }
+        public string? Adress { get; set; }
         public string? ImageLocation { get; set; }
         public double PricePerHour { get; set; }
         public double LocationX { get; set; }

@@ -42,6 +42,14 @@ namespace SESFIR.Services.Model.Service
             return _mapper.Map<List<BookingDTO>>(Bookings);
         }
 
+        public async Task<List<BookingDTO>> GetBookingsByLocationIdAsync(int locationId)
+        {
+            var Bookings = await _repositories.BookingsRepository.GetEntitiesWhereAsync(x => x.LocationId == locationId);
+
+            return _mapper.Map<List<BookingDTO>>(Bookings);
+        }
+
+
         public async Task<BookingDTO> InsertAsync(BookingDTO value)
         {
             if (await _repositories.BookingsRepository.FirstOrDefaultAsync(x => x.LocationId == value.LocationId && 
