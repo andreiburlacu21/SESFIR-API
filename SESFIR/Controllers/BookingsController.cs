@@ -99,6 +99,33 @@ namespace SESFIR.Controllers
             }
         }
 
+        [HttpGet("dates")]
+        public async Task<IActionResult> GetDates()
+        {
+            try
+            {
+                return Ok(await _bookingService.GetCurrentDates());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet("dateval/{date}")]
+        public async Task<IActionResult> CheckDate(string date)
+        {
+            try
+            {
+                return Ok(await _bookingService.CheckDateAvailability(date));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+
         #endregion
 
         #region Private methods

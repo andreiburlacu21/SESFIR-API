@@ -10,5 +10,7 @@ namespace SESFIR.Services.Model.Service.Contracts
     public interface IServiceBookings : IService<BookingDTO>
     {
         Task<BookingWithEntitiesDTO> GetBookingEnitityAsync(int id);
+        Task<IEnumerable<string>> GetCurrentDates();
+        Task<bool> CheckDateAvailability(string date);
     }
 }

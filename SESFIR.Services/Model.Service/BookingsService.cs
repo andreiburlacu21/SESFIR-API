@@ -93,6 +93,25 @@ namespace SESFIR.Services.Model.Service
             return bookingWithEntitiesDTO;
         }
 
+
+        public async Task<IEnumerable<string>> GetCurrentDates()
+        {
+            return (await _repositories.BookingsRepository.GetEntitiesWhereAsync(x => x.InDate != ""))
+                                                          .Select(x => x.InDate) ?? Enumerable.Empty<string>();
+        }
+
+        public async Task<bool> CheckDateAvailability(string searchDate)
+        {
+            var date = await _repositories.BookingsRepository.FirstOrDefaultAsync(x => x.InDate == searchDate);
+
+            if (date != null)
+                return false;
+
+            return true;
+        }
+          
+
+
     }
 
 }

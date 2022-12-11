@@ -53,6 +53,8 @@ namespace SESFIR.Services.Model.Service
 
             var account = _mapper.Map<Account>(value);
 
+            account.Role = Utils.Enums.Role.User;
+
             var accountDTO = await _repositories.AccountsRepository.InsertAsync(account);
 
             return _mapper.Map<AccountDTO>(accountDTO);
