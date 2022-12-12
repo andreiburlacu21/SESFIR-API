@@ -12,7 +12,7 @@ namespace SESFIR.Validators.Model.Validation
     {
         public LocationsValidation()
         {
-            RuleFor(loc => loc.ImageLocation)
+            RuleFor(loc => loc.LocationName)
                 .NotEmpty();
         }
     }

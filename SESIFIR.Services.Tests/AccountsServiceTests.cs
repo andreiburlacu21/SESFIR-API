@@ -69,6 +69,32 @@ public class AccountsServiceTests
     }
 
     [Test]
+    public async Task Should_SearchyByUserName_and_Return_NotFound()
+    {
+        // arrange
+        this.accountsServiceMock.SetUpSearchByUserName("test");
+
+        // act
+        var account = await accountsService.SearchByUserNameAsync("test");
+
+        // assert
+        Assert.That(account, Is.Null);
+    }
+
+    [Test]
+    public async Task Should_SearchyByEmail_and_Return_NotFound()
+    {
+        // arrange
+        this.accountsServiceMock.SetUpSearchByEmail("test@yahoo.com");
+
+        // act
+        var account = await accountsService.SearchByEmailAsync("test@yahoo.com");
+
+        // assert
+        Assert.That(account, Is.Null);
+    }
+
+    [Test]
     public async Task Should_Insert_and_Return_ExpectedValue() 
     {
         // arrange
@@ -202,4 +228,74 @@ public class AccountsServiceTests
         }
 
     }
+
+    [Test]
+    public async Task Should_Update_and_Throw_ValdiationExceptionAccountDoesNotExists()
+    {
+        // arrange
+        var accountDTO = new AccountDTO()
+        {
+            AccountId = 12,
+            UserName = "Test",
+            Password = "23123",
+            PhoneNumber = "1234567890",
+            Role = Role.User
+
+        };
+        this.accountsServiceMock.SetUpSearchByID(accountDTO.AccountId);
+        this.accountsServiceMock.SetUpGetAll();
+        this.accountsServiceMock.SetUpUpdate(accountDTO);
+        try
+        {
+            // act
+            await accountsService.UpdateAsync(accountDTO);
+
+            await accountsService.GetAllAsync();
+
+            Assert.Fail();
+        }
+        catch (ValidationException ex)
+        {
+            // assert
+
+            Assert.That(ex, Is.Not.Null);
+
+            Assert.That(ex.Message, Is.Not.Empty);
+        }
+
+    }
+
+    [Test]
+    public async Task Should_Update_and_Throw_ValdiationExceptionUserNameISTaken()
+    {
+        // arrange
+        var accountDTO = new AccountDTO()
+        {
+            AccountId = 1,
+            UserName = "Test2",
+            Password = "23123",
+            PhoneNumber = "1234567890",
+            Role = Role.User
+
+        };
+        this.accountsServiceMock.SetUpFirstOrDefault(x => x.UserName == "Test");
+        this.accountsServiceMock.SetUpGetAll();
+        this.accountsServiceMock.SetUpUpdate(accountDTO);
+        try
+        {
+            // act
+            await accountsService.UpdateAsync(accountDTO);
+
+        }
+        catch (ValidationException ex)
+        {
+            // assert
+
+            Assert.That(ex, Is.Not.Null);
+
+            Assert.That(ex.Message, Is.Not.Empty);
+        }
+
+    }
 }
+

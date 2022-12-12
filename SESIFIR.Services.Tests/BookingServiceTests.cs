@@ -40,13 +40,13 @@ public class BookingServiceTests
             TotalPrice = 123
 
         };
-        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.AccountId);
+        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.BookingId);
 
         // act
-        var account = await bookingsService.SearchByIdAsync(bookingDTO.AccountId);
+        var Booking = await bookingsService.SearchByIdAsync(bookingDTO.BookingId);
 
         // assert
-        Assert.That(account, Is.Not.Null);
+        Assert.That(Booking, Is.Not.Null);
 
     }
 
@@ -57,10 +57,10 @@ public class BookingServiceTests
         this.bookingsServiceMock.SetUpSearchByID(33);
 
         // act
-        var account = await bookingsService.SearchByIdAsync(33);
+        var Booking = await bookingsService.SearchByIdAsync(33);
 
         // assert
-        Assert.That(account, Is.Null);
+        Assert.That(Booking, Is.Null);
     }
 
     [Test]
@@ -78,17 +78,17 @@ public class BookingServiceTests
             TotalPrice = 123
 
         };
-        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.AccountId);
+        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.BookingId);
         this.bookingsServiceMock.SetUpGetAll();
         this.bookingsServiceMock.SetUpInsert(bookingDTO);
 
         // act
-        var account = await bookingsService.InsertAsync(bookingDTO);
-        var accounts = await bookingsService.GetAllAsync();
+        var Booking = await bookingsService.InsertAsync(bookingDTO);
+        var Bookings = await bookingsService.GetAllAsync();
 
         // assert
-        Assert.IsNotNull(account);
-        Assert.IsTrue(accounts.Any(x => x.AccountId == account.AccountId));
+        Assert.IsNotNull(Booking);
+        Assert.IsTrue(Bookings.Any(x => x.BookingId == Booking.BookingId));
     }
 
     [Test]
@@ -98,7 +98,7 @@ public class BookingServiceTests
         var bookingDTO = new BookingDTO()
         {
             BookingId = 3,
-            PhoneNumber = "1234567890",
+            PhoneNumber = "",
             AccountId = 3,
             LocationId = 3,
             InDate = "12-12-2022",
@@ -106,7 +106,7 @@ public class BookingServiceTests
             TotalPrice = 123
 
         };
-        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.AccountId);
+        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.BookingId);
         this.bookingsServiceMock.SetUpGetAll();
         this.bookingsServiceMock.SetUpInsert(bookingDTO);
         try
@@ -136,7 +136,7 @@ public class BookingServiceTests
         var bookingDTO = new BookingDTO()
         {
             BookingId = 3,
-            PhoneNumber = "1234567890",
+            PhoneNumber = "1234567891",
             AccountId = 3,
             LocationId = 3,
             InDate = "12-12-2022",
@@ -144,25 +144,25 @@ public class BookingServiceTests
             TotalPrice = 123
 
         };
-        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.AccountId);
+        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.BookingId);
         this.bookingsServiceMock.SetUpGetAll();
         this.bookingsServiceMock.SetUpUpdate(bookingDTO);
         this.bookingsServiceMock.SetUpFirstOrDefault(x => x.PhoneNumber == bookingDTO.PhoneNumber);
 
 
         // act
-        var initialAccount = await bookingsService.SearchByIdAsync(bookingDTO.AccountId);
+        var initialBooking = await bookingsService.SearchByIdAsync(bookingDTO.BookingId);
 
-        var updatedAccount = await bookingsService.UpdateAsync(bookingDTO);
+        var updatedBooking = await bookingsService.UpdateAsync(bookingDTO);
 
         // assert
-        Assert.IsNotNull(initialAccount);
-        Assert.IsNotNull(updatedAccount);
+        Assert.IsNotNull(initialBooking);
+        Assert.IsNotNull(updatedBooking);
 
-        Assert.IsTrue(initialAccount.AccountId == updatedAccount.AccountId);
+        Assert.IsTrue(initialBooking.BookingId == updatedBooking.BookingId);
 
         //this test only changes the password
-        Assert.AreNotSame(initialAccount.PhoneNumber, updatedAccount.PhoneNumber);
+        Assert.AreNotSame(initialBooking.PhoneNumber, updatedBooking.PhoneNumber);
     }
 
     [Test]
@@ -172,7 +172,7 @@ public class BookingServiceTests
         var bookingDTO = new BookingDTO()
         {
             BookingId = 3,
-            PhoneNumber = "1234567890",
+            PhoneNumber = "",
             AccountId = 3,
             LocationId = 3,
             InDate = "12-12-2022",
@@ -180,7 +180,7 @@ public class BookingServiceTests
             TotalPrice = 123
 
         };
-        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.AccountId);
+        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.BookingId);
         this.bookingsServiceMock.SetUpGetAll();
         this.bookingsServiceMock.SetUpUpdate(bookingDTO);
         try

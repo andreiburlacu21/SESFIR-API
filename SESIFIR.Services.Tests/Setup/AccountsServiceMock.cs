@@ -109,6 +109,24 @@ internal class AccountsServiceMock
                 return mockAccounts.FirstOrDefault(x => x.AccountId == id);
             });
     }
+
+    public void SetUpSearchByEmail(string email)
+    {
+        mockRepositories.Setup(x => x.AccountsRepository.FirstOrDefaultAsync(It.IsAny<Func<Account, bool>>()))
+            .ReturnsAsync(() =>
+            {
+                return mockAccounts.FirstOrDefault(x => x.Email == email);
+            });
+    }
+
+    public void SetUpSearchByUserName(string userName)
+    {
+        mockRepositories.Setup(x => x.AccountsRepository.FirstOrDefaultAsync(It.IsAny<Func<Account, bool>>()))
+            .ReturnsAsync(() =>
+            {
+                return mockAccounts.FirstOrDefault(x => x.UserName == userName);
+            });
+    }
     private void SetUpMockAccounts()
     {
         mockAccounts = new List<Account>()
