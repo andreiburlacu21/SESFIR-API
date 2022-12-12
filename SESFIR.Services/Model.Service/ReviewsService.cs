@@ -77,7 +77,7 @@ namespace SESFIR.Services.Model.Service
 
         public async Task<ReviewWithEntitiesDTO> GetReviewEnitityAsync(int id)
         {
-            var review = await _repositories.BookingsRepository.SearchByIdAsync(id);
+            var review = await _repositories.ReviewsRepository.SearchByIdAsync(id);
 
             var account = await _repositories.AccountsRepository.SearchByIdAsync(review.AccountId);
 
