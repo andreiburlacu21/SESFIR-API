@@ -50,6 +50,11 @@ namespace SESFIR.Services.Model.Service
                                                                                x.Description.ToLower() == value.Description.ToLower()) is not null)
                 throw new ValidationException("Review already exists");
 
+            var booking = await _repositories.BookingsRepository.FirstOrDefaultAsync(x => x.AccountId == value.AccountId &&
+                                                                                          x.LocationId == value.LocationId);
+
+            if (booking == null) throw new ValidationException("You can t add a review if you haven't been there");
+
             var userDTO = await _repositories.ReviewsRepository.InsertAsync(_mapper.Map<Review>(value));
 
             return _mapper.Map<ReviewDTO>(userDTO);

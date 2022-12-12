@@ -1,205 +1,205 @@
-﻿//using FluentValidation;
-//using NUnit.Framework;
-//using SESFIR.DTOs;
-//using SESFIR.Services.Model.Service;
-//using SESFIR.Utils.Enums;
-//using SESIFIR.Services.Tests.Setup;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using FluentValidation;
+using NUnit.Framework;
+using SESFIR.DTOs;
+using SESFIR.Services.Model.Service;
+using SESFIR.Utils.Enums;
+using SESIFIR.Services.Tests.Setup;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace SESIFIR.Services.Tests;
+namespace SESIFIR.Services.Tests;
 
-//public class BookingServiceTests
-//{
-//    private BookingsService bookingsService;
-//    private BookingsServiceMock bookingsServiceMock;
+public class BookingServiceTests
+{
+    private BookingsService bookingsService;
+    private BookingsServiceMock bookingsServiceMock;
 
-//    [SetUp]
-//    public void Initialize()
-//    {
-//        this.bookingsServiceMock = new BookingsServiceMock();
+    [SetUp]
+    public void Initialize()
+    {
+        this.bookingsServiceMock = new BookingsServiceMock();
 
-//        this.bookingsService = new BookingsService(bookingsServiceMock.Service, bookingsServiceMock.Validator, bookingsServiceMock.Mapper);
-//    }
+        this.bookingsService = new BookingsService(bookingsServiceMock.Service, bookingsServiceMock.Validator, bookingsServiceMock.Mapper);
+    }
 
-//    [Test]
-//    public async Task Should_SearchyById_and_Return_ExpectedValue()
-//    {
-//        arrange
-//       var accountDTO = new BookingDTO()
-//       {
-//           BookingId = 3,
-//           PhoneNumber = "1234567890",
-//           AccountId = 3,
-//           LocationId = 3,
-//           InDate = "12-12-2022",
-//           OutDate = "12-13-2022",
-//           TotalPrice = 123
+    [Test]
+    public async Task Should_SearchyById_and_Return_ExpectedValue()
+    {
+        // arrange
+        var bookingDTO = new BookingDTO()
+        {
+            BookingId = 3,
+            PhoneNumber = "1234567890",
+            AccountId = 3,
+            LocationId = 3,
+            InDate = "12-12-2022",
+            OutDate = "12-13-2022",
+            TotalPrice = 123
 
-//       };
-//        this.bookingsServiceMock.SetUpSearchByID(accountDTO.AccountId);
+        };
+        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.AccountId);
 
-//        act
-//       var account = await bookingsService.SearchByIdAsync(accountDTO.AccountId);
+        // act
+        var account = await bookingsService.SearchByIdAsync(bookingDTO.AccountId);
 
-//        assert
-//        Assert.That(account, Is.Not.Null);
+        // assert
+        Assert.That(account, Is.Not.Null);
 
-//    }
+    }
 
-//    [Test]
-//    public async Task Should_SearchyById_and_Return_NotFound()
-//    {
-//        arrange
-//        this.bookingsServiceMock.SetUpSearchByID(33);
+    [Test]
+    public async Task Should_SearchyById_and_Return_NotFound()
+    {
+        // arrange
+        this.bookingsServiceMock.SetUpSearchByID(33);
 
-//        act
-//       var account = await bookingsService.SearchByIdAsync(33);
+        // act
+        var account = await bookingsService.SearchByIdAsync(33);
 
-//        assert
-//        Assert.That(account, Is.Null);
-//    }
+        // assert
+        Assert.That(account, Is.Null);
+    }
 
-//    [Test]
-//    public async Task Should_Insert_and_Return_ExpectedValue()
-//    {
-//        arrange
-//       var accountDTO = new BookingDTO()
-//       {
-//           BookingId = 3,
-//           PhoneNumber = "1234567890",
-//           AccountId = 3,
-//           LocationId = 3,
-//           InDate = "12-12-2022",
-//           OutDate = "12-13-2022",
-//           TotalPrice = 123
+    [Test]
+    public async Task Should_Insert_and_Return_ExpectedValue()
+    {
+        // arrange
+        var bookingDTO = new BookingDTO()
+        {
+            BookingId = 3,
+            PhoneNumber = "1234567890",
+            AccountId = 3,
+            LocationId = 3,
+            InDate = "12-12-2022",
+            OutDate = "12-13-2022",
+            TotalPrice = 123
 
-//       };
-//        this.bookingsServiceMock.SetUpSearchByID(accountDTO.AccountId);
-//        this.bookingsServiceMock.SetUpGetAll();
-//        this.bookingsServiceMock.SetUpInsert(accountDTO);
+        };
+        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.AccountId);
+        this.bookingsServiceMock.SetUpGetAll();
+        this.bookingsServiceMock.SetUpInsert(bookingDTO);
 
-//        act
-//       var account = await bookingsService.InsertAsync(accountDTO);
-//        var accounts = await bookingsService.GetAllAsync();
+        // act
+        var account = await bookingsService.InsertAsync(bookingDTO);
+        var accounts = await bookingsService.GetAllAsync();
 
-//        assert
-//        Assert.IsNotNull(account);
-//        Assert.IsTrue(accounts.Any(x => x.AccountId == account.AccountId));
-//    }
+        // assert
+        Assert.IsNotNull(account);
+        Assert.IsTrue(accounts.Any(x => x.AccountId == account.AccountId));
+    }
 
-//    [Test]
-//    public async Task Should_Insert_and_Throw_ValdiationException()
-//    {
-//        arrange
-//       var accountDTO = new BookingDTO()
-//       {
-//           BookingId = 3,
-//           PhoneNumber = "1234567890",
-//           AccountId = 3,
-//           LocationId = 3,
-//           InDate = "12-12-2022",
-//           OutDate = "12-13-2022",
-//           TotalPrice = 123
+    [Test]
+    public async Task Should_Insert_and_Throw_ValdiationException()
+    {
+        // arrange
+        var bookingDTO = new BookingDTO()
+        {
+            BookingId = 3,
+            PhoneNumber = "1234567890",
+            AccountId = 3,
+            LocationId = 3,
+            InDate = "12-12-2022",
+            OutDate = "12-13-2022",
+            TotalPrice = 123
 
-//       };
-//        this.bookingsServiceMock.SetUpSearchByID(accountDTO.AccountId);
-//        this.bookingsServiceMock.SetUpGetAll();
-//        this.bookingsServiceMock.SetUpInsert(accountDTO);
-//        try
-//        {
-//            act
-//           await bookingsService.InsertAsync(accountDTO);
+        };
+        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.AccountId);
+        this.bookingsServiceMock.SetUpGetAll();
+        this.bookingsServiceMock.SetUpInsert(bookingDTO);
+        try
+        {
+            // act
+            await bookingsService.InsertAsync(bookingDTO);
 
-//            await bookingsService.GetAllAsync();
+            await bookingsService.GetAllAsync();
 
-//            Assert.Fail();
-//        }
-//        catch (ValidationException ex)
-//        {
-//            assert
+            Assert.Fail();
+        }
+        catch (ValidationException ex)
+        {
+            // assert
 
-//            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex, Is.Not.Null);
 
-//            Assert.That(ex.Message, Is.Not.Empty);
-//        }
+            Assert.That(ex.Message, Is.Not.Empty);
+        }
 
-//    }
+    }
 
-//    [Test]
-//    public async Task Should_Update_and_Return_ExpectedValue()
-//    {
-//        arrange
-//       var accountDTO = new BookingDTO()
-//       {
-//           BookingId = 3,
-//           PhoneNumber = "1234567890",
-//           AccountId = 3,
-//           LocationId = 3,
-//           InDate = "12-12-2022",
-//           OutDate = "12-13-2022",
-//           TotalPrice = 123
+    [Test]
+    public async Task Should_Update_and_Return_ExpectedValue()
+    {
+        // arrange
+        var bookingDTO = new BookingDTO()
+        {
+            BookingId = 3,
+            PhoneNumber = "1234567890",
+            AccountId = 3,
+            LocationId = 3,
+            InDate = "12-12-2022",
+            OutDate = "12-13-2022",
+            TotalPrice = 123
 
-//       };
-//        this.bookingsServiceMock.SetUpSearchByID(accountDTO.AccountId);
-//        this.bookingsServiceMock.SetUpGetAll();
-//        this.bookingsServiceMock.SetUpUpdate(accountDTO);
-//        this.bookingsServiceMock.SetUpFirstOrDefault(x => x.UserName == accountDTO.UserName);
+        };
+        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.AccountId);
+        this.bookingsServiceMock.SetUpGetAll();
+        this.bookingsServiceMock.SetUpUpdate(bookingDTO);
+        this.bookingsServiceMock.SetUpFirstOrDefault(x => x.PhoneNumber == bookingDTO.PhoneNumber);
 
 
-//        act
-//       var initialAccount = await bookingsService.SearchByIdAsync(accountDTO.AccountId);
+        // act
+        var initialAccount = await bookingsService.SearchByIdAsync(bookingDTO.AccountId);
 
-//        var updatedAccount = await bookingsService.UpdateAsync(accountDTO);
+        var updatedAccount = await bookingsService.UpdateAsync(bookingDTO);
 
-//        assert
-//        Assert.IsNotNull(initialAccount);
-//        Assert.IsNotNull(updatedAccount);
+        // assert
+        Assert.IsNotNull(initialAccount);
+        Assert.IsNotNull(updatedAccount);
 
-//        Assert.IsTrue(initialAccount.AccountId == updatedAccount.AccountId);
+        Assert.IsTrue(initialAccount.AccountId == updatedAccount.AccountId);
 
-//        this test only changes the password
-//        Assert.AreNotSame(initialAccount.Password, updatedAccount.Password);
-//    }
+        //this test only changes the password
+        Assert.AreNotSame(initialAccount.PhoneNumber, updatedAccount.PhoneNumber);
+    }
 
-//    [Test]
-//    public async Task Should_Update_and_Throw_ValdiationException()
-//    {
-//        arrange
-//       var accountDTO = new BookingDTO()
-//       {
-//           BookingId = 3,
-//           PhoneNumber = "1234567890",
-//           AccountId = 3,
-//           LocationId = 3,
-//           InDate = "12-12-2022",
-//           OutDate = "12-13-2022",
-//           TotalPrice = 123
+    [Test]
+    public async Task Should_Update_and_Throw_ValdiationException()
+    {
+        // arrange
+        var bookingDTO = new BookingDTO()
+        {
+            BookingId = 3,
+            PhoneNumber = "1234567890",
+            AccountId = 3,
+            LocationId = 3,
+            InDate = "12-12-2022",
+            OutDate = "12-13-2022",
+            TotalPrice = 123
 
-//       };
-//        this.bookingsServiceMock.SetUpSearchByID(accountDTO.AccountId);
-//        this.bookingsServiceMock.SetUpGetAll();
-//        this.bookingsServiceMock.SetUpUpdate(accountDTO);
-//        try
-//        {
-//            act
-//           await bookingsService.UpdateAsync(accountDTO);
+        };
+        this.bookingsServiceMock.SetUpSearchByID(bookingDTO.AccountId);
+        this.bookingsServiceMock.SetUpGetAll();
+        this.bookingsServiceMock.SetUpUpdate(bookingDTO);
+        try
+        {
+            // act
+            await bookingsService.UpdateAsync(bookingDTO);
 
-//            await bookingsService.GetAllAsync();
+            await bookingsService.GetAllAsync();
 
-//            Assert.Fail();
-//        }
-//        catch (ValidationException ex)
-//        {
-//            assert
+            Assert.Fail();
+        }
+        catch (ValidationException ex)
+        {
+            // assert
 
-//            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex, Is.Not.Null);
 
-//            Assert.That(ex.Message, Is.Not.Empty);
-//        }
+            Assert.That(ex.Message, Is.Not.Empty);
+        }
 
-//    }
-//}
+    }
+}
