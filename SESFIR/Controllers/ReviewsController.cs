@@ -93,8 +93,6 @@ namespace SESFIR.Controllers
         {
             try
             {
-                await Check(id);
-
                 return Ok(await _reviewService.GetReviewEnitityAsync(id));
             }
             catch (Exception e)

@@ -89,8 +89,6 @@ namespace SESFIR.Controllers
         {
             try
             {
-                await Check(id);
-
                 return Ok(await _bookingService.GetBookingEnitityAsync(id));
             }
             catch (Exception e)
