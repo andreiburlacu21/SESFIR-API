@@ -101,6 +101,21 @@ namespace SESFIR.Controllers
             }
         }
 
+        [HttpGet("MyEntities")]
+        public async Task<IActionResult> GetMyReviewEntities()
+        {
+            try
+            {
+                var id = int.Parse(User.FindFirst("Identifier")?.Value);
+
+                return Ok(await _reviewService.GetMyReviewsEntitiesAsync(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         #endregion
 
         #region Private methods

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using SESFIR.DataAccess.Data.Domains;
 using SESFIR.DataAccess.Factory;
 using SESFIR.DTOs;
 using SESFIR.Services.Model.Service.Contracts;
 using SESFIR.Validators;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace SESFIR.Services.Model.Service
 {
@@ -95,6 +97,30 @@ namespace SESFIR.Services.Model.Service
             reviewWithEntitiesDTO.Location = _mapper.Map<LocationDTO>(location);
 
             return reviewWithEntitiesDTO;
+        }
+
+        public async Task<List<ReviewWithEntitiesDTO>> GetMyReviewsEntitiesAsync(int id)
+        {
+            var account = await _repositories.AccountsRepository.SearchByIdAsync(id);
+
+            var list = new List<ReviewWithEntitiesDTO>();
+
+            var myReviews = await _repositories.ReviewsRepository.GetEntitiesWhereAsync(x => x.AccountId == id);
+
+            foreach(var review in myReviews)
+            {
+                var location = await _repositories.LocationsRepository.SearchByIdAsync(review.LocationId);
+
+                var reviewWithEntitiesDTO = _mapper.Map<ReviewWithEntitiesDTO>(review);
+
+                reviewWithEntitiesDTO.Account = _mapper.Map<AccountDTO>(account);
+
+                reviewWithEntitiesDTO.Location = _mapper.Map<LocationDTO>(location);
+
+                list.Add(reviewWithEntitiesDTO);
+            }
+
+            return list;
         }
     }
 }
