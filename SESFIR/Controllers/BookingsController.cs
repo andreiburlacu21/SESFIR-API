@@ -97,6 +97,21 @@ namespace SESFIR.Controllers
             }
         }
 
+        [HttpGet("MyBookings")]
+        public async Task<IActionResult> GetMyBooking()
+        {
+            try
+            {
+                var userId = int.Parse(User.FindFirst("Identifier")?.Value);
+
+                return Ok(await _bookingService.GetMyBookings(userId));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpGet("dates")]
         public async Task<IActionResult> GetDates()
         {

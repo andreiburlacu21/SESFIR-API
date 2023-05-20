@@ -87,7 +87,7 @@ namespace SESFIR.Controllers
 
             var path = webHostEnvironment.ContentRootPath + location;
 
-            var host = "https:" + Request.Host.Value + location;
+            var host = "http:" + Request.Host.Value + location;
 
             return Directory.GetFiles(path)
                             .Select(file => host + Path.GetFileName(file))

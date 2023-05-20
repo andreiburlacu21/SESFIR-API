@@ -69,4 +69,12 @@ public class AuthenticationController : ControllerBase
         return Ok(false);
 
     }
+
+    [HttpGet("check")]
+    public IActionResult Check1()
+    {
+
+        return Ok("da");
+
+    }
 }

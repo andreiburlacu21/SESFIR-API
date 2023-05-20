@@ -117,9 +117,32 @@ namespace SESFIR.Services.Model.Service
 
             return true;
         }
-          
 
+        public async Task<List<BookingWithEntitiesDTO>> GetMyBookings(int accountId)
+        {
 
+            var account = await _repositories.AccountsRepository.SearchByIdAsync(accountId);
+
+            var bookings = await _repositories.BookingsRepository.GetEntitiesWhereAsync(x => x.AccountId == accountId);
+
+            var result = new List<BookingWithEntitiesDTO>();
+
+            foreach(var booking in bookings)
+            {
+                var location = await _repositories.LocationsRepository.SearchByIdAsync(booking.LocationId);
+
+                var bookingWithEntitiesDTO = _mapper.Map<BookingWithEntitiesDTO>(booking);
+
+                bookingWithEntitiesDTO.Account = _mapper.Map<AccountDTO>(account);
+
+                bookingWithEntitiesDTO.Location = _mapper.Map<LocationDTO>(location);
+
+                result.Add(bookingWithEntitiesDTO);
+
+            };
+
+            return result;
+        }
     }
 
 }

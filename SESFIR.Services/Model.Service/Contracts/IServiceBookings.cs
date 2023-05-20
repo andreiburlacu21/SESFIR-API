@@ -11,6 +11,7 @@ namespace SESFIR.Services.Model.Service.Contracts
     {
         Task<BookingWithEntitiesDTO> GetBookingEnitityAsync(int id);
         Task<IEnumerable<string>> GetCurrentDates();
+        Task<List<BookingWithEntitiesDTO>> GetMyBookings(int accountId);
         Task<bool> CheckDateAvailability(string date);
         Task<List<BookingDTO>> GetBookingsByLocationIdAsync(int locationId);
     }

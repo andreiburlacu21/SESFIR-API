@@ -26,11 +26,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors(x => x
-   .WithOrigins(builder.Configuration.GetConnectionString("CorsLocation"), "http://localhost:4200")
+   .WithOrigins(builder.Configuration.GetConnectionString("CorsLocation"), "https://localhost:4200", "exp://192.168.0.187:19000", "https://192.168.0.187:19000", "http://192.168.0.187:19000")
    .AllowAnyMethod()
    .AllowAnyHeader());
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
