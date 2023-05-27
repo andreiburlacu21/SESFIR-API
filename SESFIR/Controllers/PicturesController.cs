@@ -89,10 +89,6 @@ namespace SESFIR.Controllers
 
             var host = Request.Scheme + ":" + Request.Host.Value + location;
 
-            var test = Directory.GetFiles(path)
-                            .Select(file => host + Path.GetFileName(file))
-                            .ToList();
-
             return Directory.GetFiles(path)
                             .Select(file => host + Path.GetFileName(file))
                             .ToList();
