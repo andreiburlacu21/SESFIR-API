@@ -60,7 +60,7 @@ namespace SESFIR.Controllers
         {
             try
             {
-                await CheckRole(user);
+                // await CheckRole(user);
 
                 return Ok(await _userService.UpdateAsync(user));
             }
