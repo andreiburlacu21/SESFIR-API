@@ -49,7 +49,7 @@ namespace SESFIR.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("No profile image set");
             }
         }
 
