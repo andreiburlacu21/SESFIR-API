@@ -71,7 +71,7 @@ namespace SESFIR.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")]
 
         public async Task<IActionResult> Delete(int id)
         {
