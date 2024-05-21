@@ -31,15 +31,15 @@ namespace SESFIR.Validators.Model.Validation
         }
         private bool MustBeAValidPassowrd(string password)
         {
-            char[] special = { '@', '#', '$', '%', '^', '&', '+', '=', '-' };
+            // char[] special = { '@', '#', '$', '%', '^', '&', '+', '=', '-' };
 
-            if (!password.Any(char.IsUpper)) return false;
+            // if (!password.Any(char.IsUpper)) return false;
 
-            if (!password.Any(char.IsLower)) return false;
+            // if (!password.Any(char.IsLower)) return false;
 
-            if (!password.Any(char.IsDigit)) return false;
+            // if (!password.Any(char.IsDigit)) return false;
 
-            if (password.IndexOfAny(special) == -1) return false;
+            // if (password.IndexOfAny(special) == -1) return false;
 
             return true;
         }
