@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors(x => x
-   .WithOrigins(builder.Configuration.GetConnectionString("CorsLocation"), "https://localhost:4200", "exp://192.168.0.187:19000", "https://192.168.0.187:19000", "http://192.168.0.187:19000")
+   .WithOrigins(builder.Configuration.GetConnectionString("CorsLocation"), "https://664c89e65860ff00084de57e--startling-sprite-2c4367.netlify.app", "exp://192.168.0.187:19000", "https://192.168.0.187:19000", "http://192.168.0.187:19000")
    .AllowAnyMethod()
    .AllowAnyHeader());
 
