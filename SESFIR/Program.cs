@@ -36,6 +36,12 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+var imagesPath = Path.Combine(builder.Environment.ContentRootPath, "Images");
+if (!Directory.Exists(imagesPath))
+{
+    Directory.CreateDirectory(imagesPath);
+}
+
 app.UseStaticFiles
     (
         new StaticFileOptions
